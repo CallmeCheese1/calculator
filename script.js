@@ -1,6 +1,7 @@
 let firstNumber = 0;
 let operator = "";
 let secondNumber = 0;
+let newNumber = true;
 const numbersDisplay = document.querySelector("#number-display")
 
 function add(a, b) {
@@ -54,7 +55,7 @@ const numberButtons = document.querySelectorAll(".number-button")
 
 numberButtons.forEach(function(button) {
     button.addEventListener("click", () => {
-        if (numbersDisplay.innerHTML === "0") {
+        if (numbersDisplay.innerHTML === "0" || newNumber === true) {
             numbersDisplay.innerHTML = button.innerText
             return
         }
@@ -68,4 +69,29 @@ numberButtons.forEach(function(button) {
 const clearButton = document.querySelector("#clear-button")
 clearButton.addEventListener("click", () => {
     clearCalculator();
+})
+
+const operandButtons = document.querySelectorAll(".operand-button")
+operandButtons.forEach((button) => {
+    firstNumber = numbersDisplay.innerHTML
+    
+    switch (button.innerText) {
+        case "+":
+            operand = "+"
+            console.log(operand)
+            break;
+        case "-":
+            operand = "+"
+            console.log(operand)
+            break;
+        case "%":
+            operand = "/"
+            console.log(operand)
+            break;
+        case "&times":
+            operand = "*"
+            console.log(operand)
+            break;
+        
+    }
 })
