@@ -27,37 +27,52 @@ function operate(num1, operand, num2) {
     newNumber = true;
     decimalButton.disabled = false;
     console.log(`${firstNumber} ${operand} ${num2}`)
+
+    if (operand === "/" && num2 === 0) {
+        clearCalculator();
+        decimalButton.disabled = true;
+        equalsButton.disabled = true;
+        newNumber = true;
+
+        operandButtons.forEach((button) => {
+            button.disabled = true;
+        })
+
+        numbersDisplay.innerText = "No."
+        
+    } else {
     
-    switch (operand) {
-        case "+":
-            answer = add(num1, num2)
-            numbersDisplay.innerHTML = answer;
-            break;
-            
-        case "-":
-            answer = subtract(num1, num2)
-            numbersDisplay.innerHTML = answer;
-            break;
-
-        case "*":
-            answer = multiply(num1, num2)
-            numbersDisplay.innerHTML = answer;
-            break;
-
-        case "/":
-            answer = divide(num1, num2)
-            numbersDisplay.innerHTML = answer;
-            break;
-
-        default:
-            throw new Error(`Unknown Operand: ${operand}`)
-            return 0;
+        switch (operand) {
+            case "+":
+                answer = add(num1, num2)
+                numbersDisplay.innerHTML = answer;
+                break;
+                
+            case "-":
+                answer = subtract(num1, num2)
+                numbersDisplay.innerHTML = answer;
+                break;
+    
+            case "*":
+                answer = multiply(num1, num2)
+                numbersDisplay.innerHTML = answer;
+                break;
+    
+            case "/":
+                answer = divide(num1, num2)
+                numbersDisplay.innerHTML = answer;
+                break;
+    
+            default:
+                throw new Error(`Unknown Operand: ${operand}`)
+                return 0;
+        }
+    
+        firstNumber = 0;
+        secondNumber = 0;
+        operand = "";
+        writingSecondNumber = false;
     }
-
-    firstNumber = 0;
-    secondNumber = 0;
-    operand = "";
-    writingSecondNumber = false;
 }
 
 function clearCalculator() {
@@ -76,6 +91,9 @@ const numberButtons = document.querySelectorAll(".number-button")
 numberButtons.forEach(function(button) {
     button.addEventListener("click", () => {
         equalsButton.disabled = false;
+        operandButtons.forEach((button) => {
+            button.disabled = false;
+        })
 
         if (numbersDisplay.innerHTML === "-0") {
             numbersDisplay.innerHTML = `-${button.innerText}`
@@ -102,6 +120,7 @@ allClearButton.addEventListener("click", () => {
 const operandButtons = document.querySelectorAll(".operand-button")
 operandButtons.forEach((button) => {
     button.addEventListener("click", () => {
+
         equalsButton.disabled = true;
 
         if (!firstNumber) {
