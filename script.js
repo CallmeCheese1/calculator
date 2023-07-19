@@ -152,6 +152,28 @@ operandButtons.forEach((button) => {
             decimalButton.disabled = false;
             writingSecondNumber = true;
         } else if (writingSecondNumber) {
+
+            switch (button.id) {
+                case "plus-button":
+                    operand = "+"
+                    console.log(operand)
+                    break;
+                case "subtract-button":
+                    operand = "-"
+                    console.log(operand)
+                    break;
+                case "division-button":
+                    operand = "/"
+                    console.log(operand)
+                    break;
+                case "multiply-button":
+                    operand = "*"
+                    console.log(operand)
+                    break;
+                default:
+                    throw new Error(`Unknown Button Clicked: ${button}`)
+            }
+            
             operate(firstNumber, operand, Number(numbersDisplay.innerHTML))
             firstNumber = answer;
             newNumber = true;
