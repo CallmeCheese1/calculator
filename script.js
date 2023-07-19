@@ -102,7 +102,7 @@ allClearButton.addEventListener("click", () => {
 const operandButtons = document.querySelectorAll(".operand-button")
 operandButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        equalsButton.disabled = false;
+        equalsButton.disabled = true;
 
         if (!firstNumber) {
             firstNumber = Number(numbersDisplay.innerHTML)
