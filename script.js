@@ -3,6 +3,7 @@ let operator = "";
 let secondNumber = 0;
 let newNumber = false;
 let answer = 0;
+let shouldCalculate = true;
 let writingSecondNumber = false;
 const numbersDisplay = document.querySelector("#number-display")
 const equalsButton = document.querySelector('#equals-button')
@@ -76,6 +77,7 @@ function operate(num1, operand, num2) {
 }
 
 function clearCalculator() {
+    console.log("Clearing everything!")
     numbersDisplay.innerHTML = "0"
     firstNumber = 0;
     secondNumber = 0;
@@ -83,6 +85,7 @@ function clearCalculator() {
     newNumber = true;
     decimalButton.disabled = false;
     writingSecondNumber = false;
+    shouldCalculate = true;
     answer = 0;
 }
 
@@ -94,6 +97,8 @@ numberButtons.forEach(function(button) {
         operandButtons.forEach((button) => {
             button.disabled = false;
         })
+        shouldCalculate = true;
+        console.log(`shouldCalculate: ${shouldCalculate}`)
 
         if (numbersDisplay.innerHTML === "-0") {
             numbersDisplay.innerHTML = `-${button.innerText}`
@@ -120,6 +125,10 @@ allClearButton.addEventListener("click", () => {
 const operandButtons = document.querySelectorAll(".operand-button")
 operandButtons.forEach((button) => {
     button.addEventListener("click", () => {
+        if(!shouldCalculate) {
+            console.log("shouldCalculate is false, so we're not doing anything!")
+            return;
+        }
 
         equalsButton.disabled = true;
 
@@ -151,7 +160,39 @@ operandButtons.forEach((button) => {
             newNumber = true;
             decimalButton.disabled = false;
             writingSecondNumber = true;
+            shouldCalculate = false;
+            console.log("We just clicked an operand, so shouldCalculate is now being set to false.")
         } else if (writingSecondNumber) {
+
+            if (!operand) {
+                switch (button.id) {
+                    case "plus-button":
+                        operand = "+"
+                        console.log(operand)
+                        break;
+                    case "subtract-button":
+                        operand = "-"
+                        console.log(operand)
+                        break;
+                    case "division-button":
+                        operand = "/"
+                        console.log(operand)
+                        break;
+                    case "multiply-button":
+                        operand = "*"
+                        console.log(operand)
+                        break;
+                    default:
+                        throw new Error(`Unknown Button Clicked: ${button}`)
+                }
+            }
+
+            operate(firstNumber, operand, Number(numbersDisplay.innerHTML))
+
+            firstNumber = answer;
+            newNumber = true;
+            decimalButton.disabled = false;
+            writingSecondNumber = true;
 
             switch (button.id) {
                 case "plus-button":
@@ -173,12 +214,9 @@ operandButtons.forEach((button) => {
                 default:
                     throw new Error(`Unknown Button Clicked: ${button}`)
             }
-            
-            operate(firstNumber, operand, Number(numbersDisplay.innerHTML))
-            firstNumber = answer;
-            newNumber = true;
-            decimalButton.disabled = false;
-            writingSecondNumber = true;
+
+            shouldCalculate = false;
+            console.log("setting shouldCalculate to false!")
         } else {
             operate(firstNumber, operand, Number(numbersDisplay.innerHTML))
         }
