@@ -5,6 +5,7 @@ let newNumber = false;
 let answer = 0;
 let shouldCalculate = true;
 let writingSecondNumber = false;
+const MAX_DISPLAY_LENGTH = 9;
 const numbersDisplay = document.querySelector("#number-display")
 const equalsButton = document.querySelector('#equals-button')
 
@@ -46,22 +47,22 @@ function operate(num1, operand, num2) {
         switch (operand) {
             case "+":
                 answer = add(num1, num2)
-                numbersDisplay.innerHTML = answer;
+                updateDisplay(answer);
                 break;
                 
             case "-":
                 answer = subtract(num1, num2)
-                numbersDisplay.innerHTML = answer;
+                updateDisplay(answer);
                 break;
     
             case "*":
                 answer = multiply(num1, num2)
-                numbersDisplay.innerHTML = answer;
+                updateDisplay(answer);
                 break;
     
             case "/":
                 answer = divide(num1, num2)
-                numbersDisplay.innerHTML = answer;
+                updateDisplay(answer);
                 break;
     
             default:
@@ -78,7 +79,7 @@ function operate(num1, operand, num2) {
 
 function clearCalculator() {
     console.log("Clearing everything!")
-    numbersDisplay.innerHTML = "0"
+    updateDisplay("0")
     firstNumber = 0;
     secondNumber = 0;
     operand = "";
@@ -87,6 +88,25 @@ function clearCalculator() {
     writingSecondNumber = false;
     shouldCalculate = true;
     answer = 0;
+}
+
+function updateDisplay(newValue) {
+    let updatedValue = 0;
+    if (newValue.toString().length > MAX_DISPLAY_LENGTH) {
+        
+        console.log(`${newValue} is longer than the current display length, ${MAX_DISPLAY_LENGTH}. Truncating it to...`)
+
+        updatedValue = Number(newValue).toPrecision(MAX_DISPLAY_LENGTH).toString();
+        console.log(updatedValue)
+
+        numbersDisplay.innerHTML = updatedValue
+        return;
+    }
+
+    console.log(MAX_DISPLAY_LENGTH);
+    console.log(newValue.toString().length);
+
+    numbersDisplay.innerHTML = newValue;
 }
 
 const numberButtons = document.querySelectorAll(".number-button")
@@ -101,18 +121,18 @@ numberButtons.forEach(function(button) {
         console.log(`shouldCalculate: ${shouldCalculate}`)
 
         if (numbersDisplay.innerHTML === "-0") {
-            numbersDisplay.innerHTML = `-${button.innerText}`
+            updateDisplay(`-${button.innerText}`)
             newNumber = false;
             return
         }
 
         if (numbersDisplay.innerHTML === "0" || newNumber === true) {
-            numbersDisplay.innerHTML = button.innerText
+            updateDisplay(button.innerText)
             newNumber = false;
             return
         }
 
-        numbersDisplay.innerHTML += button.innerText
+        updateDisplay(numbersDisplay.innerHTML + button.innerText)
     })
 })
 
@@ -248,7 +268,7 @@ decimalButton.addEventListener("click", () => {
     equalsButton.disabled = false;
 
     if (numbersDisplay.innerHTML === "0" || newNumber === true) {
-        numbersDisplay.innerHTML = "0."
+        updateDisplay("0.")
         newNumber = false;
         decimalButton.disabled = true;
         return
@@ -262,9 +282,9 @@ decimalButton.addEventListener("click", () => {
 const clearButton = document.querySelector("#clear-button")
 clearButton.addEventListener("click", () => {
     if (numbersDisplay.innerHTML.length > 1) {
-        numbersDisplay.innerHTML = numbersDisplay.innerHTML.slice(0, -1)
+        updateDisplay(numbersDisplay.innerHTML.slice(0, -1))
         return
     }
 
-    numbersDisplay.innerHTML = "0";
+    updateDisplay("0");
 })
