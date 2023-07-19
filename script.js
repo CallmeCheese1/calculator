@@ -152,6 +152,11 @@ equalsButton.addEventListener("click", () => {
 const negativeButton = document.querySelector("#negative-button")
 negativeButton.addEventListener("click", () => {
     equalsButton.disabled = false;
+    if (newNumber === true) {
+        numbersDisplay.innerText = "-0"
+        return
+    }
+    
     if (numbersDisplay.innerText.charAt(0) !== "-") {
         numbersDisplay.innerText = "-" + numbersDisplay.innerText
     } else {
