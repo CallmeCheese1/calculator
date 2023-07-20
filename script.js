@@ -5,7 +5,7 @@ let newNumber = false;
 let answer = 0;
 let shouldCalculate = true;
 let writingSecondNumber = false;
-const MAX_DISPLAY_LENGTH = 9;
+const MAX_DISPLAY_LENGTH = 7;
 const numbersDisplay = document.querySelector("#number-display")
 const equalsButton = document.querySelector('#equals-button')
 
@@ -93,6 +93,7 @@ function clearCalculator() {
 function updateDisplay(newValue) {
     let updatedValue = 0;
     if (newValue.toString().length > MAX_DISPLAY_LENGTH) {
+        numbersDisplay.style.fontSize = "32px"
         
         console.log(`${newValue} is longer than the current display length, ${MAX_DISPLAY_LENGTH}. Truncating it to...`)
 
@@ -105,6 +106,8 @@ function updateDisplay(newValue) {
 
     console.log(MAX_DISPLAY_LENGTH);
     console.log(newValue.toString().length);
+
+    numbersDisplay.style.fontSize = "64px"
 
     numbersDisplay.innerHTML = newValue;
 }

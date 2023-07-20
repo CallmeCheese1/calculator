@@ -1,0 +1,89 @@
+body {
+    background-color: black;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif
+}
+
+.calculator-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#number-display {
+    color: white;
+    width: 268px;
+    height: 74px;
+    font-weight: 100;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    font-size: 64px;
+    overflow: hidden;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.calculator-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.calculator-button {
+    background-color: rgb(78, 78, 78);
+    color: white;
+    border: 0;
+    border-radius: 50%;
+    padding: 8px 12px;
+    font-size: 32px;
+    width: 58px;
+    height: 56px;
+    text-align: center;
+}
+
+#zero-button {
+    flex-grow: 1;
+    border-radius: 32px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+#allclear-button {
+    font-size: 1.5em;
+}
+
+#clear-button {
+    font-size: 1.5em;
+}
+
+#negative-button {
+    font-size: 1.5em;
+}
+
+.operand-button {
+    background-color: #FF9500;
+}
+
+#equals-button {
+    background-color: #FF9500;
+}
+
+.modifier-button {
+    background-color: rgb(212, 212, 210);
+    color: black;
+}
+
+.calculator-button:active {
+    background-color: white;
+    color: black;
+}
